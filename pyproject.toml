@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optima-da"
+version = "0.1.0"
+description = "OPTIMA: Optimizing Data Augmentation through Bayesian Model Selection (ICLR 2026)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Madi Matymov", email = "madi.matymov@kaust.edu.sa" },
+    { name = "Ba-Hien Tran" },
+    { name = "Michael Kampffmeyer" },
+    { name = "Markus Heinonen" },
+    { name = "Maurizio Filippone" },
+]
+dependencies = ["torch>=2.0"]
+
+[project.optional-dependencies]
+vision = ["torchvision>=0.15"]
+nlp = ["transformers>=4.30", "datasets>=2.14"]
+examples = [
+    "numpy",
+    "torchvision>=0.15",
+    "transformers>=4.30",
+    "datasets>=2.14",
+    "matplotlib",
+    "scikit-learn",
+    "jupyter",
+]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

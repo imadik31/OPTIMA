@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 300" width="860" height="300" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <title>OPTIMA: augmentation parameters as latent variables</title>
+  <style>
+    .box { fill: #fcfcfb; stroke: #52514e; stroke-width: 1.5; rx: 8; }
+    .learn { fill: #eaf2fc; stroke: #2a78d6; stroke-width: 1.8; }
+    .data { fill: #f3f2ef; }
+    .t { fill: #0b0b0b; }
+    .s { fill: #52514e; font-size: 12px; }
+    .arrow { stroke: #52514e; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .kl { stroke: #eb6834; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; marker-end: url(#k); }
+    .klt { fill: #b4441a; font-size: 12px; }
+    rect.bg { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      rect.bg { fill: #1a1a19; }
+      .box { fill: #1a1a19; stroke: #c3c2b7; }
+      .learn { fill: #16263a; stroke: #3987e5; }
+      .data { fill: #262624; }
+      .t { fill: #f0efec; }
+      .s { fill: #c3c2b7; }
+      .arrow { stroke: #c3c2b7; }
+      #a path { fill: #c3c2b7; }
+      .klt { fill: #f08a60; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker>
+    <marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#eb6834"/></marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="860" height="300"/>
+
+  <!-- augmentation branch -->
+  <rect class="box learn" x="20" y="30" width="150" height="58"/>
+  <text class="t" x="95" y="55" text-anchor="middle">q(φ)</text>
+  <text class="s" x="95" y="75" text-anchor="middle">learned, prior p(φ)</text>
+
+  <rect class="box" x="230" y="30" width="170" height="58"/>
+  <text class="t" x="315" y="55" text-anchor="middle">γᵢ ~ p(γ | φ)</text>
+  <text class="s" x="315" y="75" text-anchor="middle">one draw per example</text>
+
+  <!-- data branch -->
+  <rect class="box data" x="20" y="150" width="150" height="58"/>
+  <text class="t" x="95" y="175" text-anchor="middle">xᵢ, yᵢ</text>
+  <text class="s" x="95" y="195" text-anchor="middle">training example</text>
+
+  <rect class="box" x="230" y="150" width="170" height="58"/>
+  <text class="t" x="315" y="175" text-anchor="middle">T_γᵢ(xᵢ)</text>
+  <text class="s" x="315" y="195" text-anchor="middle">rotate, shift, mix, mask…</text>
+
+  <rect class="box learn" x="460" y="150" width="150" height="58"/>
+  <text class="t" x="535" y="175" text-anchor="middle">network θ</text>
+  <text class="s" x="535" y="195" text-anchor="middle">q(θ) or point estimate</text>
+
+  <rect class="box" x="670" y="150" width="170" height="58"/>
+  <text class="t" x="755" y="175" text-anchor="middle">log p(yᵢ | T_γᵢ(xᵢ), θ)</text>
+  <text class="s" x="755" y="195" text-anchor="middle">data term</text>
+
+  <path class="arrow" d="M170,59 L228,59"/>
+  <path class="arrow" d="M315,88 L315,148"/>
+  <path class="arrow" d="M170,179 L228,179"/>
+  <path class="arrow" d="M400,179 L458,179"/>
+  <path class="arrow" d="M610,179 L668,179"/>
+
+  <!-- objective -->
+  <text class="t" x="430" y="262" text-anchor="middle" font-size="15">
+    ELBO = Σᵢ E[ log p(yᵢ | T_γᵢ(xᵢ), θ) ] − KL(q(θ) ‖ p(θ)) − KL(q(φ) ‖ p(φ))
+  </text>
+  <text class="klt" x="430" y="284" text-anchor="middle">one run learns θ and the augmentation φ; gradients reach φ through the sample γ (or REINFORCE if discrete)</text>
+  <path class="kl" d="M755,210 C755,235 700,240 650,245"/>
+</svg>
